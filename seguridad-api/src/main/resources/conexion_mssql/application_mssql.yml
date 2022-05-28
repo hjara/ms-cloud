@@ -1,0 +1,80 @@
+###########################################
+###Relacionado a Spring - Hibernate , profile y admin
+###########################################
+ 
+spring:
+  profiles:
+    active: dev
+     
+        
+# Admin Boot    
+  boot:
+    admin:
+      client:
+        url : http://127.0.0.1:1111
+        username : admin
+        password : 1234
+
+# Admin Boot - Management          
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+   
+ 
+# Log del API
+logging:
+  file:
+    name: seguridadboot.log
+    max-size: 10MB
+    max-history: 5       
+               
+---
+###########################################
+####Relacionado al despliegue  PROFILE DEFAULT
+###########################################
+spring:
+  profiles:
+    default:
+    - dev  
+  main:
+    banner-mode: "console"      
+        
+  application:
+    name: seguridad-dev
+            
+#Info DB    
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost:1433;databaseName=MIGRACION
+    username: local
+    password: local2017
+    hikari:
+      data-source-class-name: com.microsoft.sqlserver.jdbc.SQLServerDataSource
+      minimum-idle: 1
+      maximum-pool-size: 20
+      pool-name: SpringBootHikariPool
+      idle-timeout: 1
+      max-lifetime: 2000000
+      connection-timeout: 60000
+      connection-test-query: SELECT 1 FROM DUAL
+     
+#Info Persistencia JPA y Hibernate                      
+  jpa:    
+    properties:
+      hibernate:                             
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        naming_strategy:  org.hibernate.cfg.DefaultNamingStrategy       
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        show_sql: true
+        format_sql: true          
+        packagesToScan: pe.code.migracion.seguridad.dominio
+                
+
+server:
+  port: ${vcap.application.port:8071}
