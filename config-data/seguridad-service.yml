@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8071}
+  port: 8071
             
 #Info DB    
   datasource:
