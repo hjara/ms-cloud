@@ -28,6 +28,10 @@ server:
         show_sql: true
         format_sql: true          
         packagesToScan: pe.code.migracion.seguridad.dominio
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8099/eureka/
                 
 
 
